@@ -1,54 +1,49 @@
 const { EmailClient } = require("@azure/communication-email");
 
 module.exports = async function (context, req) {
+  try {
     const { name, email, message } = req.body || {};
-
     if (!name || !email || !message) {
-        context.res = {
-            status: 400,
-            body: "Missing required fields."
-        };
-        return;
+      return (context.res = {
+        status: 400,
+        body: { ok: false, error: "name, email, and message are required" }
+      });
     }
 
-    try {
-        const connectionString = process.env.AzureCommunicationServicesConnectionString;
-        const sender = process.env.senderEmailAddress;
-        const recipient = process.env.myEmailAddress;
+    const connectionString = process.env.AzureCommunicationServicesConnectionString;
+    const from = process.env.senderEmailAddress;   // donotreply@pivotlineanalytics.com
+    const to = process.env.myEmailAddress;         // your personal mailbox
 
-        const client = new EmailClient(connectionString);
+    const emailClient = new EmailClient(connectionString);
 
-        const emailMessage = {
-            senderAddress: sender,
-            recipients: {
-                to: [
-                    { address: recipient }
-                ]
-            },
-            content: {
-                subject: "New Contact Form Submission",
-                html: `
-                    <h3>New Contact Submission</h3>
-                    <strong>Name:</strong> ${name}<br/>
-                    <strong>Email:</strong> ${email}<br/><br/>
-                    <strong>Message:</strong><br/>
-                    ${message}
-                `
-            }
-        };
+    const subject = `Website contact from ${name}`;
+    const plain = `New contact form submission
 
-        await client.send(emailMessage);
+Name: ${name}
+Email: ${email}
 
-        context.res = {
-            status: 200,
-            body: "Message sent successfully."
-        };
+Message:
+${message}
+`;
+    const html =
+      `<h2>New contact form submission</h2>
+       <p><strong>Name:</strong> ${name}</p>
+       <p><strong>Email:</strong> ${email}</p>
+       <p><strong>Message:</strong></p>
+       <p>${String(message).replace(/\n/g, "<br/>")}</p>`;
 
-    } catch (err) {
-        context.log.error("ACS Email Error: ", err);
-        context.res = {
-            status: 500,
-            body: "Failed to send email."
-        };
-    }
-};
+    const poller = await emailClient.beginSend({
+      senderAddress: from,
+      recipients: { to: [{ address: to }] },
+      content: { subject, plainText: plain, html },
+      replyTo: [{ address: email, displayName: name }]
+    });
+
+    const result = await poller.pollUntilDone();
+    if (result.error) throw new Error(result.error.message);
+
+    context.res = { status: 200, body: { ok: true } };
+
+  } catch (err) {
+    context.log.error(err);
+    context.res = { statu
