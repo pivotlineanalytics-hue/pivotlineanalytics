@@ -1,4 +1,4 @@
-const nodemailer = require("nodemailer");
+const { EmailClient } = require("@azure/communication-email");
 
 module.exports = async function (context, req) {
     const { name, email, message } = req.body || {};
@@ -12,39 +12,43 @@ module.exports = async function (context, req) {
     }
 
     try {
-        let transporter = nodemailer.createTransport({
-            host: "smtp.office365.com",
-            port: 587,
-            secure: false,
-            auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS
-            }
-        });
+        const connectionString = process.env.AzureCommunicationServicesConnectionString;
+        const sender = process.env.senderEmailAddress;
+        const recipient = process.env.myEmailAddress;
 
-        await transporter.sendMail({
-            from: `"Pivot Line Website" <${process.env.SMTP_USER}>`,
-            to: "alex@pivotlineanalytics.com",
-            subject: "New Contact Form Submission",
-            html: `
-                <h3>New Contact Form Submission</h3>
-                <strong>Name:</strong> ${name}<br>
-                <strong>Email:</strong> ${email}<br><br>
-                <strong>Message:</strong><br>
-                ${message}
-            `
-        });
+        const client = new EmailClient(connectionString);
+
+        const emailMessage = {
+            senderAddress: sender,
+            recipients: {
+                to: [
+                    { address: recipient }
+                ]
+            },
+            content: {
+                subject: "New Contact Form Submission",
+                html: `
+                    <h3>New Contact Submission</h3>
+                    <strong>Name:</strong> ${name}<br/>
+                    <strong>Email:</strong> ${email}<br/><br/>
+                    <strong>Message:</strong><br/>
+                    ${message}
+                `
+            }
+        };
+
+        await client.send(emailMessage);
 
         context.res = {
             status: 200,
-            body: "Message sent."
+            body: "Message sent successfully."
         };
 
     } catch (err) {
-        context.log("SMTP error:", err);
+        context.log.error("ACS Email Error: ", err);
         context.res = {
             status: 500,
-            body: "Email failed."
+            body: "Failed to send email."
         };
     }
 };
