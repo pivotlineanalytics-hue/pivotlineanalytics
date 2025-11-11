@@ -108,7 +108,7 @@
   <header>
     <div class="container nav">
       <a class="brand" href="#">
-        <img src="PivotLine.png" alt="Pivot Line Analytics logo" class="logo">
+        <img src="C:\PivotLineWebsite\PivotLine.png" alt="Pivot Line Analytics logo" class="logo" style="width:75px;height:auto;border-radius:6px;">
         <span style="font-size:3rem;font-weight:800;margin-left:0.4rem:">Pivot Line Analytics</span>
       </a>
       <nav style="display:flex;gap:.6rem;align-items:center">
@@ -303,20 +303,48 @@
       <h2 class="section-title">Start a project</h2>
       <p class="section-sub">Tell us what you’re trying to improve. We’ll reply within one business day.</p>
       <div class="about">
-        <form name="contact" method="POST" data-netlify="true">
-          <!-- If you deploy on Netlify, this enables form capture for free. On GitHub Pages, remove data-netlify or use an external form service like Formspree. -->
-          <input type="hidden" name="form-name" value="contact" />
+        <form id="contactForm">
           <input required name="name" placeholder="Your name" />
           <input required type="email" name="email" placeholder="Email" />
           <input name="company" placeholder="Company (optional)" />
           <textarea required name="message" placeholder="What would you like to analyze?"></textarea>
           <button class="button cta" type="submit">Send message</button>
         </form>
+        <script>
+        document.getElementById("contactForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const form = e.target;
+            const data = {
+                name: form.name.value,
+                email: form.email.value,
+                company: form.company.value,
+                message: form.message.value
+            };
+
+            try {
+                const res = await fetch("/api/SendEmails", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+
+                if (res.ok) {
+                    alert("Thanks! Your message has been sent. We'll reach out within one business day.");
+                    form.reset();
+                } else {
+                    alert("There was a problem sending your message. Please email adglinn@pivotlineanalytics.com.");
+                }
+            } catch(err) {
+                alert("Network error — please email adglinn@pivotlineanalytics.com.");
+            }
+        });
+        </script>
         <div class="card">
           <strong>Prefer email?</strong>
-          <p class="section-sub" style="margin:.4rem 0 0">Reach out at <a href="mailto:adglinn@pivotlineanalytics.com">adglinn@pivotlineanalytics.com</a></p>
+          <p class="section-sub" style="margin:.4rem 0 0">Reach us at <a href="mailto:adglinn@pivotlineanalytics.com">adglinn@pivotlineanalytics.com</a></p>
           <div style="margin-top:.6rem;display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
-            <div class="kpi"><h3>EST</h3><p>2025</p></div>
+            <div class="kpi"><h3>EST</h3><p>Detroit, Michigan</p></div>
             <div class="kpi"><h3>Office</h3><p>Mon–Fri, 9–5</p></div>
           </div>
         </div>
