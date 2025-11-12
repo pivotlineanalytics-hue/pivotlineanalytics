@@ -4,15 +4,16 @@ module.exports = async function (context, req) {
   try {
     const { name, email, message } = req.body || {};
     if (!name || !email || !message) {
-      return (context.res = {
+      context.res = {
         status: 400,
         body: { ok: false, error: "name, email, and message are required" }
-      });
+      };
+      return;
     }
 
     const connectionString = process.env.AzureCommunicationServicesConnectionString;
     const from = process.env.senderEmailAddress;   // donotreply@pivotlineanalytics.com
-    const to = process.env.myEmailAddress;         // your personal mailbox
+    const to = process.env.myEmailAddress;         // your personal inbox
 
     const emailClient = new EmailClient(connectionString);
 
@@ -43,7 +44,11 @@ ${message}
     if (result.error) throw new Error(result.error.message);
 
     context.res = { status: 200, body: { ok: true } };
-
   } catch (err) {
     context.log.error(err);
-    context.res = { statu
+    context.res = {
+      status: 500,
+      body: { ok: false, error: err.message || "Internal Server Error" }
+    };
+  }
+};
