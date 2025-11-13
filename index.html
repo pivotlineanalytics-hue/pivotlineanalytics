@@ -323,7 +323,7 @@
             };
 
             try {
-                const res = await fetch("api", {
+                const res = await fetch("https://pivot-line-email-function-b3dqfgevayd5dgc8.canadacentral-01.azurewebsites.net/api/HttpTrigger1", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data)
