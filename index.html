@@ -382,36 +382,8 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
         alert("Network error — please email adglinn@pivotlineanalytics.com.");
     }
 });
+</script>  
 
-        document.getElementById("contactForm").addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            const form = e.target;
-            const data = {
-                name: form.name.value,
-                email: form.email.value,
-                company: form.company.value,
-                message: form.message.value
-            };
-
-            try {
-                const res = await fetch("/api/HttpTrigger1", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data)
-                });
-
-                if (res.ok) {
-                    alert("Thanks! Your message has been sent. We'll reach out within one business day.");
-                    form.reset();
-                } else {
-                    alert("There was a problem sending your message. Please email adglinn@pivotlineanalytics.com.");
-                }
-            } catch(err) {
-                alert("Network error — please email adglinn@pivotlineanalytics.com.");
-            }
-        });
-        </script>
         <div class="card">
           <strong>Prefer email?</strong>
           <p class="section-sub" style="margin:.4rem 0 0">Reach us at <a href="mailto:adglinn@pivotlineanalytics.com">adglinn@pivotlineanalytics.com</a></p>
