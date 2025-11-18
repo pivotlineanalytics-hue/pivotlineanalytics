@@ -371,19 +371,7 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
     </div>
   </section>
 
-  <footer>
-    <div class="container" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">
-      <div>© <span id="year"></span> Pivot Line Analytics · Glinn Co. Subsidiary · All rights reserved.</div>
-      <div style="display:flex;gap:.8rem">
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#portfolio">Portfolio</a>
-        <a href="#contact">Contact</a>
-      </div>
-    </div>
-  </footer>
-  
-  <!-- About -->
+    <!-- About -->
 <section id="founder" class="container">
   <h2 class="section-title">About the Founder</h2>
 
@@ -407,6 +395,19 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
     We help turn data into clarity and time into growth, giving owners support they can count on and decisions they can trust.
   </p>
 </section>
+  
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+      <div>© <span id="year"></span> Pivot Line Analytics · Glinn Co. Subsidiary · All rights reserved.</div>
+      <div style="display:flex;gap:.8rem">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+  
   <script>
     // Set current year in footer
     document.getElementById('year').textContent = new Date().getFullYear();
