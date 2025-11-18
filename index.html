@@ -303,14 +303,87 @@
       <h2 class="section-title">Start a project</h2>
       <p class="section-sub">Tell us what you’re trying to improve. We’ll reply within one business day.</p>
       <div class="about">
-        <form id="contactForm">
-          <input required name="name" placeholder="Your name" />
-          <input required type="email" name="email" placeholder="Email" />
-          <input name="company" placeholder="Company (optional)" />
-          <textarea required name="message" placeholder="What would you like to analyze?"></textarea>
-          <button class="button cta" type="submit">Send message</button>
-        </form>
-        <script>
+<form id="contactForm">
+
+  <!-- Normal visible fields -->
+  <input required name="name" placeholder="Your name" />
+  <input required type="email" name="email" placeholder="Email" />
+  <input name="company" placeholder="Company (optional)" />
+  <textarea required name="message" placeholder="What would you like to analyze?"></textarea>
+
+  <!-- 🛡️ HONEYPOT FIELD (hidden from humans, bots fill it) -->
+  <input 
+    type="text"
+    name="website"
+    id="website"
+    autocomplete="off"
+    tabindex="-1"
+    style="display:none !important; visibility:hidden !important; height:0; border:none; padding:0; margin:0;"
+  >
+
+  <!-- 🛡️ TIMESTAMP FIELD -->
+  <input type="hidden" name="formLoadTime" id="formLoadTime">
+
+  <button class="button cta" type="submit">Send message</button>
+</form>
+
+<script>
+// Set timestamp when the page loads
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("formLoadTime").value = Date.now();
+});
+
+document.getElementById("contactForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+
+    // -----------------------------
+    // 🛡️ SPAM PROTECTION
+    // -----------------------------
+
+    // 1. Honeypot (bots fill it, humans don't)
+    if (form.website.value.trim() !== "") {
+        console.warn("Spam blocked (honeypot triggered).");
+        return; // silently fail
+    }
+
+    // 2. Timing (bots submit instantly)
+    const loadTime = parseInt(form.formLoadTime.value);
+    if (Date.now() - loadTime < 1500) {
+        console.warn("Spam blocked (submitted too quickly).");
+        return; // silently fail
+    }
+
+    // -----------------------------
+    // NORMAL SUBMISSION
+    // -----------------------------
+    const data = {
+        name: form.name.value,
+        email: form.email.value,
+        company: form.company.value,
+        message: form.message.value
+    };
+
+    try {
+        const res = await fetch("/api/HttpTrigger1", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+
+        if (res.ok) {
+            alert("Thanks! Your message has been sent. We'll reach out within one business day.");
+            form.reset();
+        } else {
+            alert("There was a problem sending your message. Please email adglinn@pivotlineanalytics.com.");
+        }
+    } catch(err) {
+        alert("Network error — please email adglinn@pivotlineanalytics.com.");
+    }
+});
+</script>
+
         document.getElementById("contactForm").addEventListener("submit", async (e) => {
             e.preventDefault();
 
