@@ -12,14 +12,28 @@ module.exports = async function (context, req) {
             return;
         }
 
-        const connectionString = process.env.AZURE_COMMUNICATION_CONNECTION;
+        // Read your environment variables from Azure App Settings
+        const connectionString = process.env.ACS_CONNECTION_STRING;
+        const senderAddress = process.env.ACS_SENDER;
+        const toAddress = process.env.ACS_TO;
+
+        if (!connectionString || !senderAddress || !toAddress) {
+            context.res = {
+                status: 500,
+                body: { error: "Missing ACS environment variables" }
+            };
+            return;
+        }
+
         const emailClient = new EmailClient(connectionString);
 
         const emailMessage = {
-            senderAddress: "DoNotReply@<YOUR-ACS-DOMAIN>.azurecomm.net",
+            senderAddress,
             content: {
                 subject: "New Contact Form Submission",
                 plainText: `
+New contact form message:
+
 Name: ${name}
 Email: ${email}
 Company: ${company || "(none)"}
@@ -37,13 +51,13 @@ ${message}
             },
             recipients: {
                 to: [
-                    { address: "adglinn@pivotlineanalytics.com" }
+                    { address: toAddress }
                 ]
             }
         };
 
         const poller = await emailClient.beginSend(emailMessage);
-        const response = await poller.pollUntilDone();
+        const result = await poller.pollUntilDone();
 
         context.res = {
             status: 200,
@@ -51,6 +65,7 @@ ${message}
         };
 
     } catch (err) {
+        context.log("Error:", err);
         context.res = {
             status: 500,
             body: { error: err.message }
