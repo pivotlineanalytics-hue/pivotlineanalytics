@@ -12,15 +12,21 @@ module.exports = async function (context, req) {
             return;
         }
 
-        // Read your environment variables from Azure App Settings
-        const connectionString = process.env.ACS_CONNECTION_STRING;
-        const senderAddress = process.env.ACS_SENDER;
-        const toAddress = process.env.ACS_TO;
+        // Match your Static Web App environment variable names exactly:
+        const connectionString = process.env.AzureCommunicationServicesConnectionString;
+        const senderAddress = process.env.senderEmailAddress;
+        const toAddress = process.env.myEmailAddress;
 
         if (!connectionString || !senderAddress || !toAddress) {
+            context.log("Environment variables:", {
+                connectionString: !!connectionString,
+                senderAddress: !!senderAddress,
+                toAddress: !!toAddress
+            });
+
             context.res = {
                 status: 500,
-                body: { error: "Missing ACS environment variables" }
+                body: { error: "Missing one or more required environment variables." }
             };
             return;
         }
@@ -32,8 +38,6 @@ module.exports = async function (context, req) {
             content: {
                 subject: "New Contact Form Submission",
                 plainText: `
-New contact form message:
-
 Name: ${name}
 Email: ${email}
 Company: ${company || "(none)"}
@@ -50,9 +54,7 @@ ${message}
                 `
             },
             recipients: {
-                to: [
-                    { address: toAddress }
-                ]
+                to: [{ address: toAddress }]
             }
         };
 
@@ -65,7 +67,7 @@ ${message}
         };
 
     } catch (err) {
-        context.log("Error:", err);
+        context.log("ERROR sending email:", err);
         context.res = {
             status: 500,
             body: { error: err.message }
