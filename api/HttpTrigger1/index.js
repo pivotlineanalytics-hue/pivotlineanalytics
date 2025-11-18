@@ -1,54 +1,59 @@
 const { EmailClient } = require("@azure/communication-email");
 
 module.exports = async function (context, req) {
-  try {
-    const { name, email, message } = req.body || {};
-    if (!name || !email || !message) {
-      context.res = {
-        status: 400,
-        body: { ok: false, error: "name, email, and message are required" }
-      };
-      return;
-    }
+    try {
+        const { name, email, company, message } = req.body;
 
-    const connectionString = process.env.AzureCommunicationServicesConnectionString;
-    const from = process.env.senderEmailAddress;   // donotreply@pivotlineanalytics.com
-    const to = process.env.myEmailAddress;         // your personal inbox
+        if (!name || !email || !message) {
+            context.res = {
+                status: 400,
+                body: { error: "Missing required fields" }
+            };
+            return;
+        }
 
-    const emailClient = new EmailClient(connectionString);
+        const connectionString = process.env.AZURE_COMMUNICATION_CONNECTION;
+        const emailClient = new EmailClient(connectionString);
 
-    const subject = `Website contact from ${name}`;
-    const plain = `New contact form submission
-
+        const emailMessage = {
+            senderAddress: "DoNotReply@<YOUR-ACS-DOMAIN>.azurecomm.net",
+            content: {
+                subject: "New Contact Form Submission",
+                plainText: `
 Name: ${name}
 Email: ${email}
+Company: ${company || "(none)"}
 
 Message:
 ${message}
-`;
-    const html =
-      `<h2>New contact form submission</h2>
-       <p><strong>Name:</strong> ${name}</p>
-       <p><strong>Email:</strong> ${email}</p>
-       <p><strong>Message:</strong></p>
-       <p>${String(message).replace(/\n/g, "<br/>")}</p>`;
+                `,
+                html: `
+                    <h2>New Contact Form Submission</h2>
+                    <p><strong>Name:</strong> ${name}</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Company:</strong> ${company || "(none)"}</p>
+                    <p><strong>Message:</strong><br>${message}</p>
+                `
+            },
+            recipients: {
+                to: [
+                    { address: "adglinn@pivotlineanalytics.com" }
+                ]
+            }
+        };
 
-    const poller = await emailClient.beginSend({
-      senderAddress: from,
-      recipients: { to: [{ address: to }] },
-      content: { subject, plainText: plain, html },
-      replyTo: [{ address: email, displayName: name }]
-    });
+        const poller = await emailClient.beginSend(emailMessage);
+        const response = await poller.pollUntilDone();
 
-    const result = await poller.pollUntilDone();
-    if (result.error) throw new Error(result.error.message);
+        context.res = {
+            status: 200,
+            body: { success: true, message: "Email sent successfully!" }
+        };
 
-    context.res = { status: 200, body: { ok: true } };
-  } catch (err) {
-    context.log.error(err);
-    context.res = {
-      status: 500,
-      body: { ok: false, error: err.message || "Internal Server Error" }
-    };
-  }
+    } catch (err) {
+        context.res = {
+            status: 500,
+            body: { error: err.message }
+        };
+    }
 };
