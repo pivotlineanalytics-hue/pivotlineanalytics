@@ -415,7 +415,6 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
   
   <footer>
     <div class="container" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap">
-      <div>© <span id="year"></span> Pivot Line Analytics · Glinn Co. Subsidiary · All rights reserved.</div>
       <div style="display:flex;gap:.8rem">
         <a href="#about">About</a>
         <a href="#services">Services</a>
@@ -423,11 +422,19 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
         <a href="#contact">Contact</a>
       </div>
     </div>
-    <p style="margin-top: 1rem; font-size: 0.85rem; color: #777;">
+  
+    <!-- Disclaimer (centered) -->
+    <p style="margin-top: 1rem; font-size: 0.85rem; color: #777; text-align:center;">
       We’re committed to giving you our best work and every advantage possible to achieve positive results.
       Still, every business is unique, so we cannot guarantee any particular outcome.
     </p>
+  
+    <!-- Copyright line (centered under disclaimer) -->
+    <p style="text-align:center; margin-top: 0.5rem;">
+      © <span id="year"></span> Pivot Line Analytics · Glinn Co. Subsidiary · All rights reserved.
+    </p>
   </footer>
+
   
   <script>
     // Set current year in footer
