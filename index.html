@@ -101,6 +101,72 @@
       .services, .portfolio{grid-template-columns:1fr}
       .hero-actions{flex-direction:column}
     }
+
+        /* =========================
+       PAGE LOADER (PNG + Ring)
+       ========================= */
+    #page-loader{
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: grid;
+      place-items: center;
+      z-index: 9999;
+    }
+    
+    body.loading{
+      overflow: hidden;
+    }
+    
+    .loader-wrap{
+      position: relative;
+      width: 220px;
+      height: 220px;
+    }
+    
+    .loader-logo{
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 160px;     /* adjust if needed */
+      height: auto;
+      z-index: 2;
+      filter: drop-shadow(0 14px 28px rgba(0,0,0,.35));
+    }
+    
+    .loader-ring{
+      position: absolute;
+      inset: 0;
+      width: 220px;
+      height: 220px;
+      transform: rotate(-90deg);
+      z-index: 1;
+    }
+    
+    .ring-track{
+      fill: none;
+      stroke: rgba(255,255,255,.10);
+      stroke-width: 4;
+    }
+    
+    .ring-draw{
+      fill: none;
+      stroke: var(--brand);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-dasharray: 390;
+      stroke-dashoffset: 390;
+      filter: drop-shadow(0 0 6px rgba(18,183,255,.35));
+      animation: ring-draw 1.6s ease-in-out infinite;
+    }
+    
+    @keyframes ring-draw{
+      0%   { stroke-dashoffset: 390; opacity: 1; }
+      70%  { stroke-dashoffset: 0;   opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    
   </style>
 </head>
 <body>
@@ -525,6 +591,33 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
     // Set current year in footer
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+
+  <script>
+  (function () {
+    const loader = document.getElementById("page-loader");
+    if (!loader) return;
+
+    document.body.classList.add("loading");
+
+    const MIN_MS = 600;                 // prevents flicker
+    const start = performance.now();
+
+    window.addEventListener("load", () => {
+      const elapsed = performance.now() - start;
+      const remaining = Math.max(0, MIN_MS - elapsed);
+
+      setTimeout(() => {
+        loader.style.transition = "opacity 0.35s ease";
+        loader.style.opacity = "0";
+
+        setTimeout(() => {
+          loader.remove();
+          document.body.classList.remove("loading");
+        }, 380);
+      }, remaining);
+    });
+  })();
+</script>
 
 </body>
 </html>
