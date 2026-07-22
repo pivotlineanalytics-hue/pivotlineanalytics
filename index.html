@@ -291,132 +291,239 @@
 
 
 
-  <!-- Services -->
-<style>
-  /* SERVICES - Tier Chips (CORPUS, VECTOR, APEX) */
-  #services .chip {
-    display: inline-block;
-    font-size: 0.95rem;
-    font-weight: 600;
-    padding: 0.4rem 1rem;
-    border-radius: 999px;
+<!-- Services -->
+<section id="services">
+  <div class="container">
+    <h2 class="section-title">Services</h2>
+    <p class="section-sub">
+      Three service paths built around your current business needs.
+    </p>
 
-    /* On-brand colors matching your hero + site palette */
-    background: rgba(18, 183, 255, 0.12);      /* subtle brand tint */
-    border: 1px solid rgba(18, 183, 255, 0.28);
-    color: var(--text);                        /* same text color as body */
-  }
+    <div class="services">
 
-  /* SERVICES - Descriptions under each tier */
-  #services .service .section-sub {
-    font-size: 0.92rem;
-    line-height: 1.45rem;
-    color: var(--muted);                       /* soft blue-gray text */
-  }
-  /* SERVICES - Descriptions under each tier */
-#services .service .section-sub {
-  font-size: 0.92rem;
-  line-height: 1.45rem;
-  color: var(--muted);
-}
+      <!-- CORPUS -->
+      <article class="service-plan">
+        <button class="service-toggle" type="button" aria-expanded="false">
+          <div class="service-summary">
+            <span class="chip">CORPUS</span>
+            <h3 class="service-name">Consulting</h3>
+            <p class="service-focus-preview">Solving Business Problems</p>
 
-/* APEX Pricing Cards */
-.mini-cards{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin:18px 0;
-}
+            <div class="service-expand">
+              <span>View Details</span>
+              <span class="service-chevron" aria-hidden="true"></span>
+            </div>
+          </div>
+        </button>
 
-.mini-card{
-  padding:14px;
-  border-radius:12px;
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.08);
-}
+        <div class="service-details">
+          <div class="detail-block">
+            <span class="detail-label">Focus</span>
+            <div class="detail-value">Solving Business Problems</div>
+          </div>
 
-.mini-card span{
-  display:block;
-  color:var(--muted);
-  font-size:.9rem;
-  margin-bottom:6px;
-}
+          <div class="detail-block">
+            <span class="detail-label">Cost</span>
+            <div class="service-price">$1,500 / Month</div>
+          </div>
 
-.mini-card h4{
-  margin:0;
-  font-size:1.5rem;
-}
+          <div class="detail-block">
+            <span class="detail-label">Typical Engagement</span>
+            <div class="detail-value">1–3 Months</div>
+          </div>
 
-</style>
+          <div class="detail-block">
+            <h4 class="deliverables-title">Deliverables</h4>
+            <ul class="deliverables-list">
+              <li>
+                <strong>Business Assessment</strong>
+                <ul>
+                  <li>Identify Key Performance Indicators (KPIs)</li>
+                  <li>Identify Problems &amp; Inefficiencies</li>
+                  <li>Root Cause Analysis</li>
+                </ul>
+              </li>
 
-  <section id="services">
-    <div class="container">
-      <h2 class="section-title">Services</h2>
-      <p class="section-sub">
-        Pivot Line Analytics provides three levels of analytics support designed to build trust and match the current needs of your business. 
-        Each service level corresponds to one of our partnership tiers: 
-        <strong>Corpus</strong> (Consulting) → 
-        <strong>Vector</strong> (Data Analyst) → 
-        <strong>Apex</strong> (AI Structure).
-      </p>      
-      <div class="services">
-        <div class="service">
-          <span class="chip">CORPUS | $1,500 (Monthly)</span>
-          <p class="service-kicker">CONSULTING</p>
-          <h3>Strategy &#9679; Direction &#9679; Optimization</h3>
-      
-          <ul class="tier-bullets">
-            <li>Business Assessment</li>
-            <li>Data Consulting</li>
-            <li>Process Analysis</li>
-          </ul>
-      
-          <p class="tier-fit">Geared to Solve a Specific Business Problem</p>
+              <li>
+                <strong>Strategic Blueprint</strong>
+                <ul>
+                  <li>Recommendations</li>
+                  <li>Detailed Next Steps</li>
+                </ul>
+              </li>
+
+              <li>
+                <strong>Milestone Plan</strong>
+                <ul>
+                  <li>Key Milestones</li>
+                  <li>Target Timeline</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
         </div>
-    
-        <div class="service">
-          <span class="chip">VECTOR | $2,000 (Monthly)</span>
-          <p class="service-kicker">FRACTIONAL ANALYST</p>
-          <h3>Insight &#9679; Analysis &#9679; Vision</h3>
-      
-          <ul class="tier-bullets">
-            <li>Sales, Marketing, Social Media Analysis</li>
-            <li>Performance Reporting</li>
-            <li>Trend Analysis</li>
-          </ul>
-      
-          <p class="tier-fit">One Time or Monthly Data Analyst Retainer</p>
-        </div>
-        
-       <div class="service">
-          <span class="chip">APEX | Client Pricing</span>
-          <p class="service-kicker">AI PREPARATION (Coming Soon)</p>
-          <h3>Clean &#9679; Prepare &#9679; Structure</h3>
+      </article>
 
-         <div class="mini-cards">
-           
-             <div class="mini-card">
-                  <span>Existing Clients</span>
-                  <h4>$5,000</h4>
-                </div>
+      <!-- VECTOR -->
+      <article class="service-plan">
+        <button class="service-toggle" type="button" aria-expanded="false">
+          <div class="service-summary">
+            <span class="chip">VECTOR</span>
+            <h3 class="service-name">Fractional Analyst</h3>
+            <p class="service-focus-preview">Providing Data Analyst Support</p>
 
-                 <div class="mini-card">
-                  <span>New Clients</span>
-                  <h4>$10,000</h4>
-                </div>
-           
-         </div>
-         
-          <ul class="tier-bullets">
-            <li>AI Readiness Assessment</li>
-            <li>Data Cleaning and Standardization</li>
-            <li>Workflow Documentation</li>
-          </ul>
-      
-          <p class="tier-fit">Geared to Set Your Business Up For AI Integration</p>
+            <div class="service-expand">
+              <span>View Details</span>
+              <span class="service-chevron" aria-hidden="true"></span>
+            </div>
+          </div>
+        </button>
+
+        <div class="service-details">
+          <div class="detail-block">
+            <span class="detail-label">Focus</span>
+            <div class="detail-value">Provide Fractional Data Analyst Support</div>
+          </div>
+
+          <div class="detail-block">
+            <span class="detail-label">Cost</span>
+            <div class="service-price">$2,000 / Month</div>
+          </div>
+
+          <div class="detail-block">
+            <span class="detail-label">Typical Engagement</span>
+            <div class="detail-value">Ongoing</div>
+          </div>
+
+          <div class="detail-block">
+            <h4 class="deliverables-title">Deliverables</h4>
+            <ul class="deliverables-list">
+              <li>
+                <strong>Data Projects</strong>
+                <ul>
+                  <li>KPI Reporting</li>
+                  <li>Marketing and Customer Analytics</li>
+                  <li>Sales and Revenue Analytics</li>
+                  <li>Operational Performance Analytics</li>
+                  <li>Financial Performance Analysis</li>
+                </ul>
+              </li>
+
+              <li>
+                <strong>Ongoing Strategic Insights</strong>
+                <ul>
+                  <li>Trend Analysis</li>
+                  <li>Sentiment Analysis</li>
+                </ul>
+              </li>
+
+              <li>
+                <strong>Ad-Hoc Data Reporting</strong>
+              </li>
+            </ul>
+          </div>
         </div>
+      </article>
+
+      <!-- APEX -->
+      <article class="service-plan">
+        <button class="service-toggle" type="button" aria-expanded="false">
+          <div class="service-summary">
+            <span class="chip">APEX</span>
+            <h3 class="service-name">AI Preparation</h3>
+            <p class="service-focus-preview">Preparing For AI Integration</p>
+
+            <div class="service-expand">
+              <span>View Details</span>
+              <span class="service-chevron" aria-hidden="true"></span>
+            </div>
+          </div>
+        </button>
+
+        <div class="service-details">
+          <div class="detail-block">
+            <span class="detail-label">Focus</span>
+            <div class="detail-value">Preparing Business Data for AI</div>
+          </div>
+
+          <div class="detail-block">
+            <span class="detail-label">Cost</span>
+
+            <div class="pricing-grid">
+              <div class="pricing-card">
+                <span>Existing Clients</span>
+                <strong>$8,000*</strong>
+              </div>
+
+              <div class="pricing-card">
+                <span>New Clients</span>
+                <strong>$10,000*</strong>
+              </div>
+            </div>
+
+            <p class="pricing-note">*Starting Price</p>
+          </div>
+
+          <div class="detail-block">
+            <h4 class="deliverables-title">Deliverables</h4>
+            <ul class="deliverables-list">
+              <li>
+                <strong>AI Readiness Assessment</strong>
+                <ul>
+                  <li>Data Quality Assessment</li>
+                  <li>Identify Data Gaps &amp; Issues</li>
+                </ul>
+              </li>
+
+              <li>
+                <strong>Data Preparation</strong>
+                <ul>
+                  <li>Data Cleaning</li>
+                  <li>Data Standardization</li>
+                </ul>
+              </li>
+
+              <li>
+                <strong>Integration Package</strong>
+                <ul>
+                  <li>Data Dictionary</li>
+                  <li>Data Source Documentation</li>
+                  <li>Known Data Limitations</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
     </div>
-  </section>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll("#services .service-plan").forEach((card) => {
+    const toggle = card.querySelector(".service-toggle");
+
+    toggle.addEventListener("click", () => {
+      const isOpen = card.classList.contains("is-open");
+
+      document.querySelectorAll("#services .service-plan").forEach((otherCard) => {
+        otherCard.classList.remove("is-open");
+
+        const otherToggle = otherCard.querySelector(".service-toggle");
+
+        if (otherToggle) {
+          otherToggle.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      if (!isOpen) {
+        card.classList.add("is-open");
+        toggle.setAttribute("aria-expanded", "true");
+      }
+    });
+  });
+</script>
 
   <!-- Portfolio -->
   <section id="portfolio">
