@@ -166,6 +166,288 @@
       100% { opacity: 0; }
     }
 
+    /* =========================
+   EXPANDABLE SERVICE PLANS
+   ========================= */
+
+#services{
+  padding-top:0;
+  scroll-margin-top:0;
+}
+
+#services .services{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:1rem;
+  align-items:start;
+}
+
+#services .service-plan{
+  position:relative;
+  overflow:hidden;
+  border-radius:16px;
+  background:linear-gradient(
+    180deg,
+    rgba(255,255,255,.04),
+    rgba(255,255,255,.02)
+  );
+  border:1px solid rgba(255,255,255,.08);
+  transition:
+    transform .22s ease,
+    box-shadow .22s ease,
+    border-color .22s ease;
+  min-height:230px;
+}
+
+#services .service-plan:hover,
+#services .service-plan:focus-within,
+#services .service-plan.is-open{
+  transform:translateY(-6px) scale(1.03);
+  border-color:rgba(18,183,255,.38);
+  box-shadow:
+    0 20px 44px rgba(0,0,0,.28),
+    0 0 0 1px rgba(18,183,255,.08);
+  z-index:5;
+}
+
+#services .service-toggle{
+  width:100%;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:inherit;
+  text-align:left;
+  font:inherit;
+  cursor:pointer;
+}
+
+#services .service-summary{
+  min-height:230px;
+  padding:1.25rem;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+#services .service-summary > .chip{
+  font-family:"Cinzel", serif;
+  font-size:2.35rem;
+  font-weight:800;
+  letter-spacing:.22em;
+  padding-left:.22em;
+  color:var(--brand);
+  background:transparent;
+  border:0;
+  border-radius:0;
+  padding-top:0;
+  padding-right:0;
+  padding-bottom:0;
+}
+
+#services .service-name{
+  margin:.3rem 0 .15rem;
+  font-size:1.35rem;
+  color:var(--text);
+}
+
+#services .service-kicker{
+  margin:.1rem 0 .75rem;
+  font-size:.78rem;
+  font-weight:700;
+  letter-spacing:.08em;
+  color:var(--muted);
+  text-transform:uppercase;
+}
+
+#services .service-focus-preview{
+  color:var(--muted);
+  font-size:.98rem;
+  line-height:1.5;
+  margin:0;
+}
+
+#services .service-expand{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:1rem;
+  color:var(--brand);
+  font-size:.9rem;
+  font-weight:700;
+}
+
+#services .service-chevron{
+  width:9px;
+  height:9px;
+  border-right:2px solid currentColor;
+  border-bottom:2px solid currentColor;
+  transform:rotate(45deg);
+  transition:transform .22s ease;
+  margin-right:.25rem;
+}
+
+#services .service-details{
+  text-align:center;
+  max-height:0;
+  opacity:0;
+  overflow:hidden;
+  padding:0 1.25rem;
+  background:rgba(255,255,255,.025);
+  border-top:1px solid transparent;
+  transition:
+    max-height .48s ease,
+    opacity .28s ease,
+    padding .36s ease,
+    border-color .25s ease;
+}
+
+#services .service-plan:hover .service-details,
+#services .service-plan:focus-within .service-details,
+#services .service-plan.is-open .service-details{
+  max-height:900px;
+  opacity:1;
+  padding:1.1rem 1.25rem 1.3rem;
+  border-top-color:rgba(255,255,255,.08);
+}
+
+#services .service-plan:hover .service-chevron,
+#services .service-plan:focus-within .service-chevron,
+#services .service-plan.is-open .service-chevron{
+  transform:rotate(225deg);
+}
+
+#services .detail-block{
+  margin-bottom:1rem;
+}
+
+#services .detail-label{
+  display:block;
+  font-size:.88rem;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:.3rem;
+}
+
+#services .detail-value{
+  font-weight:600;
+  line-height:1.45;
+}
+
+#services .service-price{
+  font-size:1.2rem;
+  font-weight:700;
+  color:var(--text);
+}
+
+#services .pricing-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:.75rem;
+  margin-top:.4rem;
+}
+
+#services .pricing-card{
+  padding:.8rem;
+  border-radius:12px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+#services .pricing-card span{
+  display:block;
+  color:var(--muted);
+  font-size:.78rem;
+  margin-bottom:.25rem;
+}
+
+#services .pricing-card strong{
+  font-size:1.15rem;
+  color:var(--text);
+}
+
+#services .pricing-note{
+  margin:.5rem 0 0;
+  color:var(--muted);
+  font-size:.8rem;
+}
+
+#services .deliverables-title{
+  display:block;
+  margin:.2rem 0 .7rem;
+  font-size:.88rem;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+#services .deliverables-list{
+  display:inline-block;
+  text-align:center;
+  list-style:none;
+  margin:0;
+  padding-left:0;
+  color:var(--muted);
+  line-height:1.55;
+}
+
+#services .deliverables-list > li{
+  margin-bottom:.7rem;
+}
+
+#services .deliverables-list ul{
+  list-style:none;
+  margin-top:.35rem;
+  padding-left:0;
+  text-align:center;
+}
+
+#services .deliverables-list strong{
+  color:var(--text);
+}
+
+#services .deliverables-list ul li{
+  font-size:.92rem;
+  margin:.2rem 0;
+  color:var(--muted);
+}
+
+/* Responsive */
+@media (max-width:980px){
+  #services .services{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media (max-width:640px){
+  #services .services{
+    grid-template-columns:1fr;
+  }
+
+  #services .service-plan:hover{
+    transform:none;
+  }
+
+  #services .service-plan:hover .service-details{
+    max-height:0;
+    opacity:0;
+    padding:0 1.25rem;
+    border-top-color:transparent;
+  }
+
+  #services .service-plan.is-open .service-details,
+  #services .service-plan:focus-within .service-details{
+    max-height:900px;
+    opacity:1;
+    padding:1.1rem 1.25rem 1.3rem;
+    border-top-color:rgba(255,255,255,.08);
+  }
+}
     
   </style>
 </head>
