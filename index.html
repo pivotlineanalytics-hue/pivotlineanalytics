@@ -272,21 +272,25 @@
   width:100%;
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  margin-top:1rem;
+  justify-content:center;
+  margin-top:1.25rem;
   color:var(--brand);
-  font-size:.9rem;
-  font-weight:700;
 }
 
 #services .service-chevron{
-  width:9px;
-  height:9px;
-  border-right:2px solid currentColor;
-  border-bottom:2px solid currentColor;
+  width:16px;
+  height:16px;
+  border-right:3px solid currentColor;
+  border-bottom:3px solid currentColor;
   transform:rotate(45deg);
-  transition:transform .22s ease;
-  margin-right:.25rem;
+  transition:transform .3s ease;
+}
+
+/* Rotate arrow upward when the card expands */
+#services .service-plan:hover .service-chevron,
+#services .service-plan:focus-within .service-chevron,
+#services .service-plan.is-open .service-chevron{
+  transform:rotate(225deg);
 }
 
 #services .service-details{
@@ -601,7 +605,6 @@
             <p class="service-focus-preview">Solving Business Problems</p>
 
             <div class="service-expand">
-              <span>View Details</span>
               <span class="service-chevron" aria-hidden="true"></span>
             </div>
           </div>
@@ -664,7 +667,6 @@
             <p class="service-focus-preview">Providing Data Analyst Support</p>
 
             <div class="service-expand">
-              <span>View Details</span>
               <span class="service-chevron" aria-hidden="true"></span>
             </div>
           </div>
@@ -725,7 +727,6 @@
             <p class="service-focus-preview">Preparing For AI Integration</p>
 
             <div class="service-expand">
-              <span>View Details</span>
               <span class="service-chevron" aria-hidden="true"></span>
             </div>
           </div>
